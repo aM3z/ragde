@@ -3,7 +3,7 @@ This is an abstract algebra project involving various cryptosystems such as shif
 
 ## .clue file format
 
-Line 1: a
-Line 2: b
-Line 3: empty
-Line 4: ciphertext
++ Line 1: a
++ Line 2: b
++ Line 3: empty
++ Line 4: ciphertext
