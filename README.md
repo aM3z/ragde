@@ -7,3 +7,5 @@ This is an abstract algebra project involving various cryptosystems such as shif
 + Line 2: b
 + Line 3: empty
 + Line 4: ciphertext
+
+** Note: ** a and b must be valid valid R expressions. For example, if the first line is "c(1,2,3,4), ncol=2" then "a" must be a 2-by-2 matrix with 1,3 in row one and 2,4 in row two.
