@@ -6,7 +6,7 @@ source("./crypto/R/mul_mod_n.R")
 source("./crypto/R/decrypt_affine.R")
 
 ui<-fluidPage(
-	headerPanel("Affine Cryptosystem"),
+	headerPanel("Affine Cryptosystem Decryption"),
 	# inputs
 	sidebarLayout(
 		sidebarPanel(
