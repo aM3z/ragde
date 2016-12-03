@@ -14,4 +14,6 @@ mul_inv<-function(x, n) {
 			return(i)
 		}
 	}
+
+	stop(paste(x, " does not have an inverse under multiplication mod ", n)) 
 }
