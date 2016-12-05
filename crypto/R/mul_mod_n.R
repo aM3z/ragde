@@ -4,6 +4,7 @@
 #' @param b an integer
 #' @param n an integer
 #' @return a * b mod n
+#' @export
 #' @examples
 #' mul_mod_n(3,16,10)
 

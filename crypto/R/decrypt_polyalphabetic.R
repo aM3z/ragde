@@ -1,15 +1,15 @@
-#' Decrypts an affine cryptosystem.
+#' Decrypts an polyalphabetic cryptosystem.
 #' 
-#' @param data list object with a, b, and cyphertext entries
-#' @return character clear text string
+#' @param data list object with A, b, and cyphertext entries
+#' @return character cleartext string
 #' @export
 #' @examples
-#' decrypt_affine(data=list(a=5,b=3,cyphertext="DGHXIKD"))
+#' decrypt_polyalphabetic(data=list(A=matrix(c(3,1,5,2), ncol=2), b=c(2,2),cyphertext="RRGR"))
 
-decrypt_affine<-function(data) {
+decrypt_polyalphabetic<-function(data) {
 
 	# get a, b, and cyphetext from data	
-	a<-data[["a"]]
+	A<-data[["A"]]
 	b<-data[["b"]]
 	cyphertext<-data[["cyphertext"]]
 
@@ -31,11 +31,16 @@ decrypt_affine<-function(data) {
 	cypher_digits<-chars_to_digits[cypher_chars]
 
 	# compute inverses for a and b
-	a_inverse<-mul_inv(a, mod)
-	b_inverse<-add_inv(b, mod)
+	A_inverse<-matrix_mul_inv(A, mod)
+	b_inverse<-vector_add_inv(b, mod)
 
+	clear_digits = c()
 	# use decoding function
-	clear_digits<- (a_inverse * (cypher_digits + b_inverse)) %% mod
+	for(i in seq(1, length(cypher_digits), 2)) {
+		p = cypher_digits[i:(i + 1)]
+		c = (A_inverse %*% (p + b_inverse)) %% mod
+		clear_digits = c(clear_digits, c)
+	}
 
 	# convert clear digits to chars
 	clear_char<-digits_to_chars[as.character(clear_digits)]

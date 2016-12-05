@@ -4,6 +4,7 @@
 #' @param b an integer
 #' @param n an integer
 #' @return a + b mod n
+#' @export
 #' @examples
 #' add_mod_n(2,16,10)
 

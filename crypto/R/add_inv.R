@@ -3,6 +3,7 @@
 #' @param x an integer
 #' @param n an integer
 #' @return x-inverse under addition mod n
+#' @export
 #' @examples 
 #' add_inv(2, 10)
 

@@ -5,6 +5,11 @@ source("./crypto/R/mul_inv.R")
 source("./crypto/R/mul_mod_n.R")
 source("./crypto/R/decrypt_affine.R")
 source("./crypto/R/encrypt_affine.R")
+source("./crypto/R/decrypt_polyalphabetic.R")
+source("./crypto/R/encrypt_polyalphabetic.R")
+source("./crypto/R/matrix_mul_inv.R")
+source("./crypto/R/vector_add_inv.R")
+
 
 ui<-fluidPage(
 	headerPanel("Affine Cryptosystem"),
@@ -58,7 +63,95 @@ ui<-fluidPage(
 				)
 			)
 		)
+	),
+	headerPanel("Polyalphabetic Cryptosystem"),
+	
+	fluidRow(
+		column(6,
+			# outputs
+			h2("Cleartext"),
+			wellPanel(
+				textOutput("clearTextPoly")
+			),
+			# inputs
+			inputPanel(
+				column(6, 
+					tags$h4("Matrix A"),
+					tags$table(
+						tags$tr(
+							tags$td(numericInput("topLeft","", 3, min = 1, max = 25, width="80px")),
+							tags$td(numericInput("topRight","", 5, min = 1, max = 25, width="80px"))
+						),
+						tags$tr(
+							tags$td(numericInput("botLeft","", 1, min = 1, max = 25, width="80px")),
+							tags$td(numericInput("botRight","", 2, min = 1, max = 25, width="80px"))
+						)
+					)
+				),
+				column(6,
+					tags$h4("Vector b"),
+					tags$table(
+						tags$tr(
+							tags$td(numericInput("firstEntry","", 2, min = 1, max = 25, width="80px"))
+						),
+						tags$tr(
+							tags$td(numericInput("secondEntry","", 2, min = 1, max = 25, width="80px"))
+						)
+					)
+				),
+				#tags$hr(),
+				textAreaInput(
+					"cypherTextPoly",
+					"Cyphertext",
+					"RRGR",
+					width="300px"
+				)
+			)
+		),
+		column(6,
+			# outputs
+			h2("Cyphertext"),
+			wellPanel(
+				textOutput("cypherTextPoly2")
+			),
+			# inputs
+			inputPanel(
+				column(6, 
+					tags$h4("Matrix A"),
+					tags$table(
+						tags$tr(
+							tags$td(numericInput("topLeft2","", 3, min = 1, max = 25, width="80px")),
+							tags$td(numericInput("topRight2","", 5, min = 1, max = 25, width="80px"))
+						),
+						tags$tr(
+							tags$td(numericInput("botLeft2","", 1, min = 1, max = 25, width="80px")),
+							tags$td(numericInput("botRight2","", 2, min = 1, max = 25, width="80px"))
+						)
+					)
+				),
+				column(6,
+					tags$h4("Vector b"),
+					tags$table(
+						tags$tr(
+							tags$td(numericInput("firstEntry2","", 2, min = 1, max = 25, width="80px"))
+						),
+						tags$tr(
+							tags$td(numericInput("secondEntry2","", 2, min = 1, max = 25, width="80px"))
+						)
+					)
+				),
+				#tags$hr(),
+				textAreaInput(
+					"clearTextPoly2",
+					"Cleartext",
+					"HELP",
+					width="300px"
+				)
+			)
+		)
 	)
+
+
 )
 
 server<-function(input, output) {
@@ -92,9 +185,41 @@ server<-function(input, output) {
 				)
 			)
 		)
+		
+	})
 
+	output$clearTextPoly <- renderText({ 
+	
+		decrypt_polyalphabetic(	
+			data<-list(
+				A = matrix(c(input$topLeft, input$botLeft, input$topRight, input$botRight), ncol=2),
+				b = c(input$firstEntry, input$secondEntry),
+				cyphertext = gsub(
+					"[[:blank:]]",
+					"",
+					toupper(input$cypherTextPoly)
+				)
+			)
+		)
 		
 	 })
+
+	output$cypherTextPoly2 <- renderText({ 
+
+		encrypt_polyalphabetic(	
+			data<-list(
+				A = matrix(c(input$topLeft2, input$botLeft2, input$topRight2, input$botRight2), ncol=2),
+				b = c(input$firstEntry2, input$secondEntry2),
+				cleartext = gsub(
+					"[[:blank:]]",
+					"",
+					toupper(input$clearTextPoly2)
+				)
+			)
+		)
+
+	})
+
 }
 
 shinyApp(ui=ui, server=server)

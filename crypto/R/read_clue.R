@@ -2,6 +2,7 @@
 #'
 #' @param filepath string containing relative path to .clue file
 #' @return list containing data from the file
+#' @export
 #' @examples
 #' read_clue("../clues/filename.clue")
 

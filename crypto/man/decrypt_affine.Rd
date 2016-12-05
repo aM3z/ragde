@@ -16,6 +16,6 @@ character clear text string
 Decrypts an affine cryptosystem.
 }
 \examples{
-decode_affine(data)
+decrypt_affine(data=list(a=5,b=3,cyphertext="DGHXIKD"))
 }
 

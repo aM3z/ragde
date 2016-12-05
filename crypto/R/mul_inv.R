@@ -4,6 +4,7 @@
 #' @param x an integer
 #' @param n an integer
 #' @return x-inverse under multiplication mod n
+#' @export
 #' @examples 
 #' mul_inv(3, 10)
 

@@ -16,6 +16,6 @@ character cyphertext string
 Encrypts an affine cryptosystem.
 }
 \examples{
-decode_affine(data)
+encrypt_affine(data=list(a=5,b=3,cleartext="ALGEBRA"))
 }
 
