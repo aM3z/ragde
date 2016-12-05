@@ -12,6 +12,24 @@ source("./crypto/R/vector_add_inv.R")
 
 
 ui<-fluidPage(
+	tags$head(
+		tags$style(HTML("
+			div.col-sm-12 {
+				background: #000;
+				color: #fff;
+				text-align: center;
+			}
+
+			div.shiny-text-output {
+			    word-wrap: break-word;
+			}
+
+			textarea.shiny-bound-input {
+				width: 100%;
+			}
+
+		"))
+	),			
 	headerPanel("Affine Cryptosystem"),
 	
 	fluidRow(
@@ -64,6 +82,7 @@ ui<-fluidPage(
 			)
 		)
 	),
+	tags$hr(),
 	headerPanel("Polyalphabetic Cryptosystem"),
 	
 	fluidRow(
