@@ -14,10 +14,20 @@ source("./crypto/R/vector_add_inv.R")
 ui<-fluidPage(
 	tags$head(
 		tags$style(HTML("
+			
+			div.container-fluid {
+		    	max-width: 1140px;
+				padding: 0;
+				font: 16px Helvetica, sans-serif;
+				width: 95%;
+				margin: 0 auto;
+			}
+
 			div.col-sm-12 {
-				background: #000;
+				background: #66B9BF;
 				color: #fff;
 				text-align: center;
+				padding: 5px;
 			}
 
 			div.shiny-text-output {
@@ -50,8 +60,8 @@ ui<-fluidPage(
 					"b value",
 					min=0, max=25, value=3),
 				textAreaInput(
-					"cypherText",
-					"Cyphertext",
+					"cipherText",
+					"Ciphertext",
 					"DGHXIKD",
 					width="300px"
 				)
@@ -59,9 +69,9 @@ ui<-fluidPage(
 		),
 		column(6,
 			# outputs
-			h2("Cyphertext"),
+			h2("Ciphertext"),
 			wellPanel(
-				textOutput("cypher_text_encrypt", inline=F)
+				textOutput("cipher_text_encrypt", inline=F)
 			),
 			# inputs
 			inputPanel(
@@ -120,18 +130,18 @@ ui<-fluidPage(
 				),
 				#tags$hr(),
 				textAreaInput(
-					"cypherTextPoly",
-					"Cyphertext",
-					"RRGR",
+					"cipherTextPoly",
+					"Ciphertext",
+					"IZAQYCLFVBQJWEIOFWZYQJECNIFYXDYDVORWQJIOJKQJ",
 					width="300px"
 				)
 			)
 		),
 		column(6,
 			# outputs
-			h2("Cyphertext"),
+			h2("Ciphertext"),
 			wellPanel(
-				textOutput("cypherTextPoly2")
+				textOutput("cipherTextPoly2")
 			),
 			# inputs
 			inputPanel(
@@ -163,35 +173,35 @@ ui<-fluidPage(
 				textAreaInput(
 					"clearTextPoly2",
 					"Cleartext",
-					"HELP",
+					"MATHEMATICS IS THE QUEEN OF THE SCIENCES",
 					width="300px"
 				)
 			)
 		)
-	)
+	),
+	tags$hr()
 
 
 )
 
 server<-function(input, output) {
+
 	output$clearText <- renderText({ 
 	
 		decrypt_affine(	
 			data<-list(
 				a = input$a,
 				b = input$b,
-				cyphertext = gsub(
+				ciphertext = gsub(
 					"[[:blank:]]",
 					"",
-					toupper(input$cypherText)
+					toupper(input$cipherText)
 				)
 			)
 		)
+	})
 
-		
-	 })
-
-	output$cypher_text_encrypt <- renderText({ 
+	output$cipher_text_encrypt <- renderText({ 
 	
 		encrypt_affine(	
 			data<-list(
@@ -204,7 +214,6 @@ server<-function(input, output) {
 				)
 			)
 		)
-		
 	})
 
 	output$clearTextPoly <- renderText({ 
@@ -213,17 +222,16 @@ server<-function(input, output) {
 			data<-list(
 				A = matrix(c(input$topLeft, input$botLeft, input$topRight, input$botRight), ncol=2),
 				b = c(input$firstEntry, input$secondEntry),
-				cyphertext = gsub(
+				ciphertext = gsub(
 					"[[:blank:]]",
 					"",
-					toupper(input$cypherTextPoly)
+					toupper(input$cipherTextPoly)
 				)
 			)
 		)
-		
-	 })
+	})
 
-	output$cypherTextPoly2 <- renderText({ 
+	output$cipherTextPoly2 <- renderText({ 
 
 		encrypt_polyalphabetic(	
 			data<-list(
@@ -236,7 +244,6 @@ server<-function(input, output) {
 				)
 			)
 		)
-
 	})
 
 }

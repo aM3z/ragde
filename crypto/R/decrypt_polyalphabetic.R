@@ -11,7 +11,7 @@ decrypt_polyalphabetic<-function(data) {
 	# get a, b, and cyphetext from data	
 	A<-data[["A"]]
 	b<-data[["b"]]
-	cyphertext<-data[["cyphertext"]]
+	cyphertext<-data[["ciphertext"]]
 
 	# this vector will be used to convert chars to digits
 	chars_to_digits<-0:25
